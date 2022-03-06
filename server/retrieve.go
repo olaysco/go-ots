@@ -17,7 +17,7 @@ type RetrieveResponse struct {
 }
 
 func Retrieve(retrieveRequest RetrieveRequest) (*RetrieveResponse, error) {
-	apiUrl := "https://onetimesecret.com/api/v1/secret/" + retrieveRequest.Secret
+	apiUrl := RootUrl + "secret/" + retrieveRequest.Secret
 
 	req, err := http.NewRequest(http.MethodPost, apiUrl, nil)
 	if err != nil {

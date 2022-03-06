@@ -20,9 +20,8 @@ func statusCmd() *cobra.Command {
 			if response, err := server.Status(statusRequest); err != nil {
 				fmt.Printf("an error occured %s", err.Error())
 			} else {
-				fmt.Printf("status %s:", response.Status)
+				fmt.Printf("status: %s", response.Status)
 			}
-
 		},
 	}
 

@@ -15,7 +15,7 @@ type StatusRequest struct {
 }
 
 func Status(statusRequest StatusRequest) (*StatusResponse, error) {
-	apiUrl := "https://onetimesecret.com/api/v1/status"
+	apiUrl := RootUrl + "status"
 	req, err := http.NewRequest(http.MethodGet, apiUrl, nil)
 	if err != nil {
 		return nil, err

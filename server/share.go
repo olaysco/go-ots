@@ -23,12 +23,7 @@ type ShareResponse struct {
 }
 
 func Share(shareRequest ShareRequest) (*ShareResponse, error) {
-	// body := &ShareRequest{
-	// 	Secret:     "olayiwola",
-	// 	Passphrase: "ola",
-	// 	TTL:        uint(time.Now().UnixNano()) + 120,
-	// }
-	apiUrl := "https://onetimesecret.com/api/v1/share"
+	apiUrl := RootUrl + "share"
 
 	req, err := http.NewRequest(http.MethodPost, apiUrl, nil)
 	if err != nil {
