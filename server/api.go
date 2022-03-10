@@ -12,7 +12,9 @@ type Credentials struct {
 	Password string
 }
 
-var RootUrl = "https://onetimesecret.com/api/v1/"
+var url = "https://onetimesecret.com/"
+var RootUrl = url + "api/v1/"
+var SecretUrl = url + "secret/"
 
 func MakeRequest(req *http.Request, cred Credentials) (*APIResponse, error) {
 	client := &http.Client{}

@@ -2,7 +2,9 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+	"strconv"
 )
 
 type ShareRequest struct {
@@ -10,16 +12,17 @@ type ShareRequest struct {
 	Passphrase  string `json:"passphrase"`
 	TTL         uint   `json:"ttl"`
 	Recipient   string `json:"recipient"`
-	credentials Credentials
+	Credentials Credentials
 }
 
 type ShareResponse struct {
 	CustId     string `json:"custid"`
 	MetadatKey string `json:"metadata_key"`
 	SecretKey  string `json:"secret_key"`
-	TTL        uint   `json:"ttl"`
-	Updated    uint   `json:"updated"`
-	Created    uint   `json:"created"`
+	Link       string
+	TTL        uint `json:"ttl"`
+	Updated    uint `json:"updated"`
+	Created    uint `json:"created"`
 }
 
 func Share(shareRequest ShareRequest) (*ShareResponse, error) {
@@ -32,16 +35,22 @@ func Share(shareRequest ShareRequest) (*ShareResponse, error) {
 	q := req.URL.Query()
 	q.Add("secret", shareRequest.Secret)
 	q.Add("passphrase", shareRequest.Passphrase)
-	q.Add("ttl", string(rune(shareRequest.TTL)))
+	q.Add("ttl", strconv.Itoa(int(shareRequest.TTL)))
 	req.URL.RawQuery = q.Encode()
 
-	response, err := MakeRequest(req, shareRequest.credentials)
+	response, err := MakeRequest(req, shareRequest.Credentials)
 	if err != nil {
 		return nil, err
 	}
 
 	var shareresponse ShareResponse
 	err = json.Unmarshal([]byte(*response), &shareresponse)
+
+	if shareresponse.SecretKey == "" {
+		return nil, errors.New("unable to generate secret url, ensure correct parameters are passed")
+	}
+
+	shareresponse.Link = SecretUrl + shareresponse.SecretKey
 
 	return &shareresponse, err
 }

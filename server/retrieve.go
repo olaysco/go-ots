@@ -23,6 +23,7 @@ func Retrieve(retrieveRequest RetrieveRequest) (*RetrieveResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	q := req.URL.Query()
 	q.Add("passphrase", retrieveRequest.Passphrase)
 	req.URL.RawQuery = q.Encode()
