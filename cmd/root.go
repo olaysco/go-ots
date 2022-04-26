@@ -10,8 +10,8 @@ import (
 var RootCmd = &cobra.Command{
 	Use:   "ots",
 	Short: "A simple command to generate one-time secret.",
-	Long: `Generate a onetime secret for securely sharing your password
-				  using the one-time secret service API https://onetimesecret.com/`,
+	Long: `Generate a onetime secret for securely sharing your password/secrets
+		    using the one-time secret service API https://onetimesecret.com/`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
 	},

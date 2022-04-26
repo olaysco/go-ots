@@ -8,7 +8,7 @@ import (
 type RetrieveRequest struct {
 	Secret      string `json:"SECRET_KEY"`
 	Passphrase  string `json:"passphrase"`
-	credentials Credentials
+	Credentials Credentials
 }
 
 type RetrieveResponse struct {
@@ -28,7 +28,7 @@ func Retrieve(retrieveRequest RetrieveRequest) (*RetrieveResponse, error) {
 	q.Add("passphrase", retrieveRequest.Passphrase)
 	req.URL.RawQuery = q.Encode()
 
-	response, err := MakeRequest(req, retrieveRequest.credentials)
+	response, err := MakeRequest(req, retrieveRequest.Credentials)
 	if err != nil {
 		return nil, err
 	}
